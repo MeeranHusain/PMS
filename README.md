@@ -62,3 +62,23 @@ Visit http://127.0.0.1:8000/ in your browser.
 2. Browse available medicines and add them to the cart.
 3. Proceed to checkout and place an order.
 4. Admins can manage products, orders, and users via the admin dashboard.
+
+
+## 🤝 Contributing
+Contributions are welcome! If you'd like to contribute:
+1. Fork the repo.
+2. Create a new branch (feature-branch).
+3. Commit your changes and push them.
+4. Open a Pull Request.
+
+## 📝 License
+This project is licensed under the MIT License.
+
+## Contact
+
+- Author: Meeran Husain
+- GitHub: [MeeranHusain](https://github.com/MeeranHusain)
+
+---
+
+Feel free to add more details as needed. Let me know if you need any changes!
