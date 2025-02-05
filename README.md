@@ -1,98 +1,65 @@
-# Project Management System (PMS)
+Pharmacy Management System (PMS) 💊
+A comprehensive E-commerce Pharmacy Management System built using Python and Django, designed to streamline the online purchasing and management of pharmaceutical products.
 
-## Overview
-The **Project Management System (PMS)** is a web-based application built using **Python** and **Django** that helps users manage and track projects efficiently. It provides functionality for task assignments, progress tracking, and collaboration among team members.
+🚀 Features
+User Authentication (Sign Up, Login, Logout)
+Admin Dashboard for managing products, orders, and users
+Product Management (Add, Edit, Delete Medicines)
+Shopping Cart & Checkout for seamless ordering
+Order Management (Track orders, view history)
+Search & Filter functionality for medicines
+Secure Payment Integration (Optional)
+Responsive UI for mobile and desktop users
+🛠️ Tech Stack
+Backend: Python, Django, Django Rest Framework (DRF)
+Frontend: HTML, CSS, JavaScript, Bootstrap
+Database: MySQL / SQLite
+Deployment: Heroku / AWS / DigitalOcean (Optional)
+📌 Installation Guide
+1️⃣ Clone the Repository
+bash
+Copy
+Edit
+git clone https://github.com/MeeranHusain/PMS.git
+cd PMS
+2️⃣ Set Up Virtual Environment (Optional)
+bash
+Copy
+Edit
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+3️⃣ Install Dependencies
+bash
+Copy
+Edit
+pip install -r requirements.txt
+4️⃣ Configure Database
+bash
+Copy
+Edit
+python manage.py makemigrations
+python manage.py migrate
+5️⃣ Run the Development Server
+bash
+Copy
+Edit
+python manage.py runserver
+Visit http://127.0.0.1:8000/ in your browser.
 
-## Features
-- User authentication and role-based access control
-- Create, update, and delete projects
-- Assign tasks to team members
-- Track project progress
-- Notifications and alerts for task updates
-- Dashboard with project insights
+🛒 Usage
+Sign up or log in as a customer or admin.
+Browse available medicines and add them to the cart.
+Proceed to checkout and place an order.
+Admins can manage products, orders, and users via the admin dashboard.
+📷 Screenshots
+(You can add images of your project here)
 
-## Technologies Used
-- **Backend:** Python, Django
-- **Frontend:** HTML, CSS, JavaScript, Bootstrap
-- **Database:** MySQL
+🤝 Contributing
+Contributions are welcome! If you'd like to contribute:
 
-## Installation
-### Prerequisites
-Ensure you have the following installed:
-- Python (>=3.8)
-- Django (latest version)
-- MySQL
-
-### Setup Instructions
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/MeeranHusain/PMS.git
-   ```
-2. Navigate to the project directory:
-   ```sh
-   cd PMS
-   ```
-3. Create and activate a virtual environment:
-   ```sh
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   ```
-4. Install dependencies:
-   ```sh
-   pip install -r requirements.txt
-   ```
-5. Configure the database in `settings.py`:
-   ```python
-   DATABASES = {
-       'default': {
-           'ENGINE': 'django.db.backends.mysql',
-           'NAME': 'your_database_name',
-           'USER': 'your_database_user',
-           'PASSWORD': 'your_database_password',
-           'HOST': 'localhost',
-           'PORT': '3306',
-       }
-   }
-   ```
-6. Run migrations:
-   ```sh
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
-7. Create a superuser:
-   ```sh
-   python manage.py createsuperuser
-   ```
-8. Start the development server:
-   ```sh
-   python manage.py runserver
-   ```
-9. Open your browser and visit:
-   ```
-   http://127.0.0.1:8000/
-   ```
-
-## Usage
-- Admins can create and manage projects.
-- Users can be assigned tasks and update progress.
-- Dashboard displays key project statistics.
-- Notifications keep users updated on task changes.
-
-## Contribution
-Contributions are welcome! Follow these steps to contribute:
-1. Fork the repository.
-2. Create a new branch (`feature-branch`).
-3. Commit your changes (`git commit -m "Added new feature"`).
-4. Push to your branch (`git push origin feature-branch`).
-5. Open a pull request.
-
-## License
-This project is licensed under the **MIT License**.
-
-## Contact
-For any queries or support, reach out to **[Meeran Husain](https://github.com/MeeranHusain)**.
-
----
-
-Enjoy building with PMS! 🚀
-
+Fork the repo.
+Create a new branch (feature-branch).
+Commit your changes and push them.
+Open a Pull Request.
+📝 License
+This project is licensed under the MIT License.
