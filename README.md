@@ -35,3 +35,29 @@ cd PMS
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
+
+### 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4️⃣ Configure Database
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### 5️⃣ Run the Development Server
+
+```bash
+python manage.py runserver
+```
+Visit http://127.0.0.1:8000/ in your browser.
+
+## 🛒 Usage
+1. Sign up or log in as a customer or admin.
+2. Browse available medicines and add them to the cart.
+3. Proceed to checkout and place an order.
+4. Admins can manage products, orders, and users via the admin dashboard.
