@@ -27,9 +27,11 @@ A comprehensive **E-commerce Pharmacy Management System** built using **Python a
 ```bash
 git clone https://github.com/MeeranHusain/PMS.git
 cd PMS
+```
 
 ### 2️⃣ Set Up Virtual Environment (Optional)
 
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
