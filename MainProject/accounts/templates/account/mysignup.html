@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %} Sign Up {% endblock %}
+
+{% block body %}  
+
+<!-- {% comment %} Particle.Js Script {% endcomment %} -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<div id="particles-js" style="position: absolute; width: 100%; height: 300%; z-index: -1;"></div>
+
+<script>
+  particlesJS('particles-js', {
+    particles: {
+      number: {
+        value: 70,
+        density: {
+          enable: true,
+          value_area: 800
+        }
+      },
+      color: {
+        value: "#ffffff"
+      },
+      shape: {
+        type: "circle",
+        stroke: {
+          width: 0,
+          color: "#000000"
+        },
+        polygon: {
+          nb_sides: 5
+        },
+        image: {
+          src: "https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js",
+          width: 100,
+          height: 100
+        }
+      },
+      opacity: {
+        value: 0.5,
+        random: false,
+        anim: {
+          enable: false,
+          speed: 1.5,
+          opacity_min: 0.1,
+          sync: false
+        }
+      },
+      size: {
+        value: 5,
+        random: true,
+        anim: {
+          enable: false,
+          speed: 40,
+          size_min: 0.1,
+          sync: false
+        }
+      },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: "#ffffff",
+        opacity: 0.4,
+        width: 1
+      },
+      move: {
+        enable: true,
+        speed: 6,
+        direction: "none",
+        random: false,
+        straight: false,
+        out_mode: "out",
+        attract: {
+          enable: false,
+          rotateX: 600,
+          rotateY: 1200
+        }
+      }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: {
+          enable: true,
+          mode: "repulse"
+        },
+        onclick: {
+          enable: true,
+          mode: "push"
+        },
+        resize: true
+      },
+      modes: {
+        grab: {
+          distance: 400,
+          line_linked: {
+            opacity: 1
+          }
+        },
+        bubble: {
+          distance: 400,
+          size: 40,
+          duration: 2,
+          opacity: 8,
+          speed: 3
+        },
+        repulse: {
+          distance: 200,
+          duration: 0.4
+        },
+        push: {
+          particles_nb: 4
+        },
+        remove: {
+          particles_nb: 2
+        }
+      }
+    },
+    retina_detect: true
+  });
+</script>
+
+<style>
+  #particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: #000000;
+  }
+
+  /* Ensure all form inputs take full width */
+  .form-control {
+    max-width: 100% !important;
+  }
+
+  .form-control {
+    /* height: 50px; Adjust height */
+    /* font-size: 1rem;Ensure readable text size */
+    padding: 10px 15px; /* Add padding for better spacing */
+    border: 2px solid #ced4da; /* Add a subtle border */
+    border-radius: 5px; /* Rounded corners */
+    transition: all 0.3s ease; /* Smooth transition for focus effects */
+  }
+
+  /* Focus effect for input fields */
+  .form-control:focus {
+    border-color: #343a40; /* Darker border on focus */
+    box-shadow: 0 0 5px rgba(52, 58, 64, 0.3); /* Subtle shadow */
+    outline: none; /* Remove default outline */
+  }
+
+  /* Label Styling */
+  .form-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #343a40; /* Dark color for better readability */
+  }
+
+  /* Button Styling */
+  .btn-dark {
+    height: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    border-radius: 8px; /* Slightly rounded corners */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth effects */
+  }
+
+  .btn-dark:hover {
+    background-color: #212529; /* Darker shade on hover */
+    transform: scale(1.02); /* Slight zoom effect */
+  }
+
+  
+</style>
+
+<div class="container mt-5 rounded">
+  <div class="row">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6 bg-light p-4 rounded">
+      <hr />
+      <h5 class="display-3 text-center bg-dark text-light">Sign Up</h5>
+      {% include "messages.html" %}
+      
+      {% for alert in messages %}
+        <!-- <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+            {{ alert }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div> -->
+      {% endfor%}
+        
+      <hr />
+      <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        <!-- User Form Fields -->
+        {% for field in uform %}
+        
+            <label for="{{ field.id_for_label }}" class="fw-bold form-label">{{ field.label }}</label>
+            <div class="form-group col">
+              {{ field|add_class:"form-control form-control-sm mb-2" | attr:"placeholder: Enter your details" }} <!-- Using custom add_class filter -->
+              {% if field.help_text %}
+                <p><small class="form-text text-muted">{{ field.help_text }}</small></p>
+              {% endif %}
+              {% for error in field.errors %}
+                <div class="text-danger">{{ error }}</div>
+              {% endfor %}
+            </div>
+         
+        {% endfor %}
+
+        <!-- Customer Form Fields -->
+        {% for field in cform %}
+        <label for="{{ field.id_for_label }}" class="fw-bold">{{ field.label }}</label>
+        <div class="form-group mb-2">
+          {{ field|add_class:"form-control" }}  <!-- Using custom add_class filter -->
+          {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <div class="text-danger ">{{ error }}</div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+
+        <!-- Submit Button -->
+        <div class="d-grid gap-2 mt-5">
+          <button type="submit" class="btn btn-dark btn-lg">Sign Up</button>
+        </div>
+
+        <hr>
+
+        <p class="text-center">
+          Already have an account? <a href="{% url 'login' %}" class="text-decoration-none">Login</a>
+        </p>
+        <p class="text-center">
+          <a href="/" class="text-decoration-none">Back to Home</a>
+        </p>
+      </form>
+      <br>
+    </div>
+
+    <div class="col-md-3"></div>
+  </div>
+</div>
+
+
+
+{% endblock %}

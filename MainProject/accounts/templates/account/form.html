@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %} Reset Password {% endblock title %}
+{% block body %}
+
+<!-- Particle.Js Script -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<div id="particles-js" style="position: absolute; width: 100%; height: 150%; z-index: -1;"></div>
+
+<script>
+  particlesJS('particles-js', {
+    particles: {
+      number: {
+        value: 70,
+        density: {
+          enable: true,
+          value_area: 800
+        }
+      },
+      color: {
+        value: "#ffffff"
+      },
+      shape: {
+        type: "circle",
+        stroke: {
+          width: 0,
+          color: "#000000"
+        },
+        polygon: {
+          nb_sides: 5
+        },
+        image: {
+          src: "https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js",
+          width: 100,
+          height: 100
+        }
+      },
+      opacity: {
+        value: 0.5,
+        random: false,
+        anim: {
+          enable: false,
+          speed: 1.5,
+          opacity_min: 0.1,
+          sync: false
+        }
+      },
+      size: {
+        value: 5,
+        random: true,
+        anim: {
+          enable: false,
+          speed: 40,
+          size_min: 0.1,
+          sync: false
+        }
+      },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: "#ffffff",
+        opacity: 0.4,
+        width: 1
+      },
+      move: {
+        enable: true,
+        speed: 6,
+        direction: "none",
+        random: false,
+        straight: false,
+        out_mode: "out",
+        attract: {
+          enable: false,
+          rotateX: 600,
+          rotateY: 1200
+        }
+      }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: {
+          enable: true,
+          mode: "repulse"
+        },
+        onclick: {
+          enable: true,
+          mode: "push"
+        },
+        resize: true
+      },
+      modes: {
+        grab: {
+          distance: 400,
+          line_linked: {
+            opacity: 1
+          }
+        },
+        bubble: {
+          distance: 400,
+          size: 40,
+          duration: 2,
+          opacity: 8,
+          speed: 3
+        },
+        repulse: {
+          distance: 200,
+          duration: 0.4
+        },
+        push: {
+          particles_nb: 4
+        },
+        remove: {
+          particles_nb: 2
+        }
+      }
+    },
+    retina_detect: true
+  });
+</script>
+
+<style>
+  #particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: #000000;
+  }
+
+  .btn-dark {
+    height: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-dark:hover {
+    background-color: #212529;
+    transform: scale(1.05);
+  }
+</style>
+
+<div class="container mt-4 rounded">
+  <div class="row">
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4 bg-light p-4 rounded">
+      <hr />
+      <h5 class="display-4 text-center bg-dark text-light">Reset Password</h5>
+      <hr />
+      <form method="POST" action="{{ form_action }}">
+        {% csrf_token %}
+        <!-- {% comment %} {% for alert in messages %}
+          <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+              {{ alert }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor%} {% endcomment %} -->
+
+        {% if messages %}
+            {% include "messages.html" %} 
+        {% endif %}  
+        
+        {% if form %}
+          {{ form.as_p }}
+        {% endif %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <div class="d-grid gap-2 mt-4">
+          <button class="btn btn-dark btn-lg" type="submit">Submit</button>
+        </div>
+        
+        {% if otp == 'verify-otp' %}
+        <div class="d-grid gap-2 mt-3">
+          <button class="btn btn-dark btn-lg" type="submit" name="resend_otp" value="true">Resend OTP</button>
+        </div>
+        {% endif %}
+        <hr>
+        <p class="text-center">Back to <a href="{% url 'login' %}" class="text-decoration-none">Login</a></p>
+      </form>
+    </div>
+
+    <div class="col-md-4"></div>
+  </div>
+</div>
+
+
+
+{% endblock %}

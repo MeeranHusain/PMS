@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% block title %} Product {% endblock title %}
+<!-- {% load static %} -->
+
+{% block body %}
+
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Sidebar with Filters -->
+        <div class="col-md-3 order-1 mb-5 mb-md-0" style="margin-top: 5.5%;">
+            <!-- Filter by Brand -->
+            <div class="border p-3 rounded mb-4">
+                <h3 class="h6 text-uppercase text-black" style="color: #2631c6; font-size: larger; font-weight: bold;">Brand</h3>
+                <ul class="list-unstyled mb-0">
+                    {% for brand in brands %}
+                        <li class="mb-1">
+                            <label>
+                                <input type="checkbox" name="brand" value="{{ brand.id }}" 
+                                    {% if brand.id|stringformat:"s" in selected_brands %}checked{% endif %} class="filter-checkbox"> 
+                                <span style="color: BLACK;">{{ brand.name }}</span>
+                            </label>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+
+            <!-- Filter by Category -->
+<div class="border p-3 rounded mb-4">
+    <h3 class="mb-3 h6 text-uppercase text-black" style="color: #2631c6; font-size: larger; font-weight: bold;">Category</h3>
+    <ul class="list-unstyled mb-0">
+        {% for category in categories %}
+            <li class="mb-1">
+                <label>
+                    <input type="checkbox" name="category" value="{{ category.id }}" 
+                    {% if category.id|stringformat:"s" in selected_categories %}checked{% endif %} class="filter-checkbox"> 
+                    <span style="color: black;">{{ category.name }}</span>
+                </label>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+            <!-- Filter by Price -->
+            <div class="border p-3 rounded mb-4"  >
+                <h3 class="mb-3 h6 text-uppercase text-black" style="color: #2631c6; font-size: larger; font-weight: bold;">Price</h3>
+                <input type="range" class="form-range" id="price-range" min="100" max="1000" step="50" 
+                    value="{{ max_price }}" oninput="updatePriceLabel(this.value)">
+                <p class="" style="color: black;margin-bottom: -3px;margin-top: -5px;">₹<span id="price-label" style="color: black;font-weight: bolder;">{{ max_price }}</span></p>
+            </div>
+            <button class="btn btn-outline-primary w-100" id="apply-price-filter">Apply Filter</button>
+        </div>
+
+        <!-- 3 col over -->
+
+        <!-- Product Grid -->
+        <div class="col-md-9 order-2">
+            {% if query %}
+                <h2 class="h2 mb-4 text-center" style="color: #2631c6;">Search results for "{{ query }}"</h2>
+            {% else %}
+                <h2 class="h2 mb-4 text-center" style="color: #414141;">Explore Our Products</h2>
+            {% endif %}
+
+            <div class="row">
+                {% for medicine in objects %}
+                <div class="col-6 col-md-4 mb-4">
+                    <div class="card h-100">
+                        <a href="{% url 'product' medicine.id %}">
+                            {% if medicine.image %}
+                            <img src="{{ medicine.image.url }}" class="card-img-top" alt="{{ medicine.name }}">
+                            {% else %}
+                            <img src="{% static 'images/placeholder.jpg' %}" class="card-img-top" alt="No Image Available">
+                            {% endif %}
+                        </a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ medicine.name }}</h5>
+                            <p class="card-text">Brand: {{ medicine.brand.name }}</p>
+                            <p class="font-weight-bold">&#8377; {{ medicine.price }}</p>
+
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'add_to_cart' medicine.id %}" class="btn btn-primary btn-sm">Add To Cart</a>
+                            {% else %}
+                                <a href="{% url 'add_to_cart' medicine.id %}" class="btn btn-primary btn-sm">Add to Cart</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% if not objects %}
+                <div class="text-center">
+                    <img src="{% static 'images/noproduct.png' %}" alt="No products found" class="img-fluid">
+                </div>
+                {% endif %}
+            </div>
+            <br><br><br>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1{% if selected_colors %}&color={{ selected_colors|join:',' }}{% endif %}{% if selected_brands %}&brand={{ selected_brands|join:',' }}{% endif %}{% if selected_categories %}&category={{ selected_categories|join:',' }}{% endif %}" style="color: #2631c6;">&laquo; First</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if selected_colors %}&color={{ selected_colors|join:',' }}{% endif %}{% if selected_brands %}&brand={{ selected_brands|join:',' }}{% endif %}{% if selected_categories %}&category={{ selected_categories|join:',' }}{% endif %}" style="color: #2631c6;">Previous</a>
+                            </li>
+                        {% endif %}
+        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active" style="background-color: #2631c6;" >
+                                    <span class="page-link" style="background-color: #2631c6;">{{ num }}</span>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}{% if selected_colors %}&color={{ selected_colors|join:',' }}{% endif %}{% if selected_brands %}&brand={{ selected_brands|join:',' }}{% endif %}{% if selected_categories %}&category={{ selected_categories|join:',' }}{% endif %}" style="color: #2631c6;">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+        
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if selected_colors %}&color={{ selected_colors|join:',' }}{% endif %}{% if selected_brands %}&brand={{ selected_brands|join:',' }}{% endif %}{% if selected_categories %}&category={{ selected_categories|join:',' }}{% endif %}" style="color: #2631c6;">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if selected_colors %}&color={{ selected_colors|join:',' }}{% endif %}{% if selected_brands %}&brand={{ selected_brands|join:',' }}{% endif %}{% if selected_categories %}&category={{ selected_categories|join:',' }}{% endif %}" style="color: #2631c6;">Last &raquo;</a>
+                            </li>
+                        {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+<br><br>
+
+<!-- Custom CSS -->
+<style>
+    .color-circle {
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        border-radius: 50%;
+    }
+    .pagination .page-link {
+        color: #007bff;
+        border: none;
+    }
+    .img-fluid{
+        max-width: 90%;
+        height: auto;
+    }
+</style>
+
+<!-- Custom CSS -->
+<style>
+    .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .pagination .page-link {
+        color: #2631c6;
+    }
+    .pagination .active .page-link {
+        background-color: #2631c6;
+        border-color: #2631c6;
+        color: white;
+    }    
+    .pagination .page-item:hover .page-link {
+        background-color: #f8f9fa;
+    }
+</style>
+
+<!-- JavaScript -->
+<script>
+    function updatePriceLabel(value) {
+        document.getElementById('price-label').textContent = value;
+    }
+
+    document.getElementById('apply-price-filter').addEventListener('click', function () {
+        const price = document.getElementById('price-range').value;
+
+        const selectedBrands = Array.from(document.querySelectorAll('input[name="brand"]:checked')).map(cb => cb.value);
+        const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value);
+
+        let urlParams = new URLSearchParams(window.location.search);
+        urlParams.delete('brand');
+        urlParams.delete('category');
+        urlParams.delete('min_price');
+        urlParams.delete('max_price');
+
+        if (selectedBrands.length) urlParams.append('brand', selectedBrands.join(','));
+        if (selectedCategories.length) urlParams.append('category', selectedCategories.join(','));
+        urlParams.append('max_price', price);
+
+        window.location.href = `?${urlParams.toString()}`;
+    });
+</script> 
+
+
+    
+
+
+
+{% endblock %}

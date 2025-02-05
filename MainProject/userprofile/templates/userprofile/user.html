@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} User Profile {% endblock title %}
+{% block body %}
+<!-- <link rel="stylesheet" href="{% static 'css/user.css' %}"> -->
+ <head>
+  <style>
+/* General Reset */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: rgb(159, 208, 237);
+}
+
+/* User Profile Page Styles */
+.user-page-container {
+  width: 100%;
+  margin: 0 auto;
+  padding:20px;
+}
+
+/* User Info Section */
+.user-info-box, .address-section {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 10px 50px;
+  box-shadow: 0 5px 10px rgb(103, 101, 101);
+
+}
+
+/* Heading Styles */
+h2 {
+  font-size: 2.5rem;
+  color: #414141;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* User Information Display */
+.user-info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Two columns for each row */
+  gap: 0px;
+  
+}
+
+.user-info .info-label {
+  font-size: 1.2rem;
+  color: #2631c6;
+  margin-left: 35%;
+}
+
+.user-info .info-value {
+  font-size: 1.2rem;
+  color: #333;
+  margin-left:-5%
+}
+
+/* Saved Addresses Section */
+.saved-addresses {
+  display: flex;
+  flex-direction: column;
+}
+
+.saved-addresses .address-card {
+  background: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0 5px 10px rgb(192, 192, 192);
+}
+
+.saved-addresses .address-card .address-content {
+  margin-bottom: 10px;
+}
+
+.saved-addresses .address-card .address-content h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2631c6;
+}
+
+.saved-addresses .address-card .address-content p {
+  font-size: 1rem;
+}
+
+/* Add New Address Button */
+.add-address-button {
+  margin-top: 20px;
+  /* background: #2631c6; */
+  color: white;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  text-align: center;
+  margin-left: 25%;
+}
+
+/* .add-address-button:hover {
+  background: #323fff;
+} */
+
+/* Ensure that navbar styles are not affected */
+.navbar {
+  margin: 0; /* Reset any margin */
+  padding: 10px 20px; /* Ensure standard navbar padding */
+}
+
+/* Ensure that the form inputs have their own style */
+.address-form-wrapper input,
+.address-form-wrapper select,
+.address-form-wrapper button {
+  height: 45px;
+  border-radius: 6px;
+  border: 1.5px solid #2631c6;
+  padding: 0 15px;
+  font-size: 16px;
+  color: black;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.address-form-wrapper input:focus,
+.address-form-wrapper select:focus,
+.address-form-wrapper button:focus {
+  border-color: #2631c6;
+}
+
+.address-form-wrapper button {
+  background: #2631c6;
+  font-size: 1.5rem;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.address-form-wrapper button:hover {
+  background: #3549e6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-page-container {
+    padding: 15px;
+  }
+
+  .user-info-box,
+  .address-section {
+    padding: 20px;
+  }
+}
+
+  </style>
+ </head>
+
+<div class="start-section">
+  <!-- Your Orders Button -->
+  <div style="text-align: right;margin-top: 3.5%;margin-bottom: 1%;margin-right: 10.1%;">
+    <a href="{% url 'orders' %}"><button class="btn" style="background-color: #2631c6;color: white;">Your Orders</button></a>
+  </div>
+
+  <!-- User Information Box -->
+  <div class="user-info-box" >
+    <h2>Personal Information</h2>
+    <div class="user-info">
+      <div class="info-label">First Name:</div>
+      <div class="info-value">{{ user.first_name }}</div>
+
+      <div class="info-label">Last Name:</div>
+      <div class="info-value">{{ user.last_name }}</div>
+
+      <div class="info-label">Username:</div>
+      <div class="info-value">{{ user.username }}</div>
+
+      <div class="info-label">Email:</div>
+      <div class="info-value">{{ user.email }}</div>
+
+      <div class="info-label">Phone Number:</div>
+      <div class="info-value">{{ form.phoneNumber.value }}</div>
+
+      <div class="info-label">Date of Birth:</div>
+      <div class="info-value">{{ form.dob.value }}</div>
+    </div>
+    <br>
+  </div>
+  
+  <!-- Saved Addresses Section -->
+  <div class="address-section">
+    <h2>Saved Addresses</h2>
+    <!-- Displaying saved addresses -->
+    <div class="saved-addresses">
+      {% for address in detail %}
+        <div class="address-card">
+          <div class="address-content">
+            <h3>{{ address.title }}</h3>
+            <p class="pr-5" style="margin-right: 50%;">Block No: {{ address.block_number }}, <span>{{ address.building }}</span> {{ address.street}} {{ address.area }}, {{ address.city }},
+              Land-mark {{ address.land_mark }}, {{ address.state }} - {{ address.pincode }}</p>
+            <!-- <p>{{ address.city }}, {{ address.state }} - {{ address.pincode }}</p> -->
+            <!-- <p></p> -->
+          </div>
+          <!-- <a href="{% url 'editAddress' address.id %}" class="btn btn-secondary">Edit</a> -->
+          <!-- <a href="{% url 'deleteAddress' address.id %}" class="btn btn-primary">Delete</a> -->
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Add New Address Button -->
+    <button class="add-address-button btn btn-primary" onclick="toggleAddressForm()">Add New Address</button>
+    <br>
+    <br>
+    <!-- Address Form -->
+    <div id="address-form" style="display:none;">
+      <h2 style="margin-top: 2%;">Fill the address form</h2>
+      <form method="POST" class="address-form-wrapper">
+        {% csrf_token %}
+        {{ addressForm.as_p }}
+        <button type="submit" style="width: 50%;margin-left: 25%;">Save Address</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleAddressForm() {
+    var form = document.getElementById('address-form');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
+
+
+{% endblock %}

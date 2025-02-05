@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block title %}Cart Details{% endblock title %}
+{% load total %}
+{% block body %}
+
+
+
+<div class="site-section py-4">
+    <div class="container">
+        <div class="row mb-5">
+            {% if cart %}
+            <form action="{% url 'update_cart' %}" method="post" class="col-md-12">
+                <div>
+                    <h1 class="text-center" style="margin-top: 1.5%; margin-bottom: 0.5%; color:  #414141;">Your Cart</h1>
+                </div>
+                {% csrf_token %}
+                <div class="site-blocks-table table-responsive">
+                    <table class="table table-bordered table-hover caption-top">
+                        <caption>Cart Details</caption>
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="product-thumbnail">Image</th>
+                                <th class="product-name">Product</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-total">Total</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart %}
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <img src="{{ item.product.image.url }}" alt="Product Image" class="img-fluid" style="width: 100px;">
+                                </td>
+                                <td class="product-name">
+                                    <h2 class="h5 text-black">{{ item.product.name }}</h2>
+                                </td>
+                                <td style="font-weight: bold;">&#8377; {{ item.product.price }}</td>
+                                <td >
+                                    <div class="input-group mb-3" style="max-width: 120px; margin-left: 23%;">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                                        </div>
+                                        <input type="text" class="form-control text-center" 
+                                               name="{{ item.id }}" 
+                                               value="{{ item.quantity }}" 
+                                               min="0" max="{{ item.product.quantity }}" step="1" >
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-primary js-btn-plus" type="button" >&plus;</button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="font-weight: bold;">&#8377; {{ item|item_total_price }}</td>
+                                <td>
+                                    <a href="{% url 'remove_item_from_cart' item.id %}" class="btn btn-outline-danger btn-sm">- X -</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary btn-sm btn-block" style="font-size: 1.2rem; padding: 10px 0; width: 40%;">Update Cart</button>
+                        <a href="{% url 'clear_cart' %}" class="btn btn-outline-primary btn-sm btn-block"  style="font-size: 1.2rem; padding: 10px 0; width: 40%;">Clear Cart</a>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <h4 class="text-center">Cart Total: &#8377; {{ cart|total_price }}</h4>
+                        <hr>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg" style="font-size: 1.7rem; padding: 10px 0; width: 70%;">Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% else %}
+            <h1 class="text-center py-5">Your cart is empty</h1>
+            <a href="{% url 'all_products' %}" class="btn btn-primary btn-lg d-block mx-auto" style="width: fit-content;">Keep Shopping</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .btn:hover {
+        color: white;
+    }
+
+    .table th, .table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .input-group .form-control {
+        font-size: 1rem;
+    }
+</style>
+
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Decrement button functionality
+        document.querySelectorAll('.js-btn-minus').forEach((button) => {
+            button.addEventListener('click', function () {
+                let input = this.closest('.input-group').querySelector('input');
+                let currentValue = parseInt(input.value) || 0;
+                if (currentValue > 0) {
+                    input.value = currentValue - 1;
+                }
+            });
+        });
+
+        // Increment button functionality
+        document.querySelectorAll('.js-btn-plus').forEach((button) => {
+            button.addEventListener('click', function () {
+                let input = this.closest('.input-group').querySelector('input');
+                let maxValue = parseInt(input.getAttribute('max')) || 100; // Default max if undefined
+                let currentValue = parseInt(input.value) || 0;
+                if (currentValue < maxValue) {
+                    input.value = currentValue + 1;
+                }
+            });
+        });
+    });
+    
+</script>
+
+
+
+{% endblock %} 

@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% block title %} Login {% endblock title %}
+{% block body %}
+
+
+<!-- Particle.Js Script -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+
+<div id="particles-js" style="position: absolute; width: 100%; height: 170%; z-index: -1;"></div>
+
+
+<script>
+  particlesJS('particles-js', {
+    particles: {
+      number: {
+        value: 90,
+        density: {
+          enable: true,
+          value_area: 900
+        }
+      },
+      color: {
+        value: "#ffffff"
+      },
+      shape: {
+        type: "circle",
+        stroke: {
+          width: 0,
+          color: "#000000"
+        },
+        polygon: {
+          nb_sides: 5
+        },
+        image: {
+          src: "https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js",
+          width: 100,
+          height: 100
+        }
+      },
+      opacity: {
+        value: 0.5,
+        random: false,
+        anim: {
+          enable: false,
+          speed: 1.5,
+          opacity_min: 0.1,
+          sync: false
+        }
+      },
+      size: {
+        value: 5,
+        random: true,
+        anim: {
+          enable: false,
+          speed: 40,
+          size_min: 0.2,
+          sync: false
+        }
+      },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: "#ffffff",
+        opacity: 0.4,
+        width: 1
+      },
+      move: {
+        enable: true,
+        speed: 6,
+        direction: "none",
+        random: false,
+        straight: false,
+        out_mode: "out",
+        attract: {
+          enable: false,
+          rotateX: 600,
+          rotateY: 1200
+        }
+      }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: {
+          enable: true,
+          mode: "repulse"
+        },
+        onclick: {
+          enable: true,
+          mode: "push"
+        },
+        resize: true
+      },
+      modes: {
+        grab: {
+          distance: 400,
+          line_linked: {
+            opacity: 1
+          }
+        },
+        bubble: {
+          distance: 400,
+          size: 40,
+          duration: 2,
+          opacity: 8,
+          speed: 3
+        },
+        repulse: {
+          distance: 200,
+          duration: 0.4
+        },
+        push: {
+          particles_nb: 4
+        },
+        remove: {
+          particles_nb: 2
+        }
+      }
+    },
+    retina_detect: true
+  });
+</script>
+
+
+<style>
+  #particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: #000000;
+    /* Set the background color */
+  }
+
+  /* Button Styling */
+  .btn-dark {
+    height: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    border-radius: 8px; /* Slightly rounded corners */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth effects */
+  }
+
+  .btn-dark:hover {
+    background-color: #212529; /* Darker shade on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+  }
+</style>
+
+<div class="container mt-5 rounded">
+  <div class="row">
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4 bg-light p-4 rounded">
+      <hr />
+      <h5 class="display-3 text-center bg-dark text-light">Login</h5>
+      {% include "messages.html" %}
+
+      <hr />
+      <form action="/accounts/login/" method="post">
+        {% csrf_token %}
+
+        <label for="username" class="fw-bold">Username</label>
+        <div class="form-group">
+          <input type="text" id="username" class="form-control mb-3" placeholder="Enter Your username Address" name="username"
+            required>
+        </div>
+
+        <label for="pass1" class="fw-bold">Password</label>
+        <div class="form-group">
+          <input type="password" id="pass1" class="form-control mb-3" placeholder="Enter Your Password" name="pass1"
+            required>
+        </div>
+        <br>
+        <div class="d-grid gap-2">
+          <button class="btn btn-dark btn-lg" type="submit">Login</button>
+        </div>
+        <hr>
+            &nbsp;&nbsp;&nbsp;New User? <a href="{% url 'register' %}" class="text-decoration-none">Signup</a>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Back to <a href="/" class="text-decoration-none">Home</a>
+        <hr>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;forget Password. <a href="{% url 'forgot_password' %}" class="text-decoration-none">Click Here</a>
+
+      </form>
+      <br>
+    </div>
+
+    <div class="col-md-4"></div>
+  </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Home {% endblock title %}
+{% block body %}
+
+<div class="d-flex justify-content-center">
+  <div class="w-25 p-3">
+    {% include "messages.html" %}
+  </div>
+</div>
+
+<!-- Carousel Section -->
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="margin-top: 20px;">
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- Carousel Items -->
+    <div class="carousel-inner shadow-lg rounded">
+        <div class="carousel-item active">
+            <img src="{% static '/images/one.jpg' %}" class="img-fluid d-block w-100" alt="First Slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h5 class="bg-dark text-light p-2 rounded" style="opacity: 0.8;">Welcome to Our Store</h5>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static '/images/two.jpg' %}" class="d-block w-100" alt="Second Slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="bg-dark text-light p-2 rounded" style="opacity: 0.8;">Welcome to Our Store</h5>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static '/images/three.jpg' %}" class="d-block w-100" alt="Third Slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="bg-dark text-light p-2 rounded" style="opacity: 0.8;">Welcome to Our Store</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 50%;"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 50%;"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<!-- Additional Styling -->
+<style>
+.carousel-item img {
+    max-height: 600px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.carousel-caption h5,
+.carousel-caption p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+}
+
+.carousel-indicators button {
+    background-color: #2631c6;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 50px;
+    height: 50px;
+}
+</style>
+
+<!-- Bootstrap Script -->
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+></script>
+
+
+<!-- Particle.Js Script -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+
+<div id="particles-js" style="position: absolute; width: 100%; height: 160%; z-index: -1;"></div>
+
+
+<script>
+  particlesJS('particles-js', {
+    particles: {
+      number: {
+        value: 50,
+        density: {
+          enable: true,
+          value_area: 800
+        }
+      },
+      color: {
+        value: "#ffffff"
+      },
+      shape: {
+        type: "circle",
+        stroke: {
+          width: 0,
+          color: "#000000"
+        },
+        polygon: {
+          nb_sides: 5
+        },
+        image: {
+          src: "https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js",
+          width: 100,
+          height: 100
+        }
+      },
+      opacity: {
+        value: 0.5,
+        random: false,
+        anim: {
+          enable: false,
+          speed: 1,
+          opacity_min: 0.1,
+          sync: false
+        }
+      },
+      size: {
+        value: 3,
+        random: true,
+        anim: {
+          enable: false,
+          speed: 40,
+          size_min: 0.1,
+          sync: false
+        }
+      },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: "#ffffff",
+        opacity: 0.4,
+        width: 1
+      },
+      move: {
+        enable: true,
+        speed: 6,
+        direction: "none",
+        random: false,
+        straight: false,
+        out_mode: "out",
+        attract: {
+          enable: false,
+          rotateX: 600,
+          rotateY: 1200
+        }
+      }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: {
+          enable: true,
+          mode: "repulse"
+        },
+        onclick: {
+          enable: true,
+          mode: "push"
+        },
+        resize: true
+      },
+      modes: {
+        grab: {
+          distance: 400,
+          line_linked: {
+            opacity: 1
+          }
+        },
+        bubble: {
+          distance: 400,
+          size: 40,
+          duration: 2,
+          opacity: 8,
+          speed: 3
+        },
+        repulse: {
+          distance: 200,
+          duration: 0.4
+        },
+        push: {
+          particles_nb: 4
+        },
+        remove: {
+          particles_nb: 2
+        }
+      }
+    },
+    retina_detect: true
+  });
+</script>
+
+
+<style>
+  #particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: #000000; /* Set the background color */
+  }
+</style>
+
+
+{% endblock body %}

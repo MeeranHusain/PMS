@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Order Details {% endblock title %}
+
+{% block body %}
+
+<head>
+  <style>
+    body{
+      background-color: rgb(159, 208, 237);
+      
+    }
+
+    /* Prevent navbar styles from being affected by order page styles */
+    .order-page-container {
+      margin-top: -3% /* Adjust for the navbar height */
+    }
+
+    /* Order Page Styles */
+    .order-container {
+      width: 100%;
+      margin-top: 0;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Order Box Styles */
+    .order-box {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0px 0px 5px 5px rgb(128, 127, 127);
+      /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); */
+      margin-bottom: 30px;
+      padding: 10px 50px;
+      margin: 0 9%;
+    }
+
+    /* Heading Styles */
+    .order-box h2 {
+      font-size: 2.5rem;
+      color: #414141;;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    /* Order List Styles */
+    .orders-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .order-card {
+      background: #f9f9f9;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 5px 10px rgb(192, 192, 192);
+    }
+
+    .order-card h3 {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #2631c6;
+    }
+
+    .order-card p {
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .order-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .order-card ul li {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .order-container {
+        padding: 15px;
+      }
+
+      .order-box {
+        padding: 20px;
+      }
+
+      .order-card h3 {
+        font-size: 1.5rem;
+      }
+
+      .order-card p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<!-- Display messages (if any) -->
+{% if messages %}
+<div class="alert-container">
+  {% for message in messages %}
+    <div class="alert" role="alert">
+      <p class="{{ message.tags }}" style="margin-top: 2%;margin-bottom: -4%;margin-left: 2%;text-align: center;font-size: 1.5rem;">{{ message }}</p>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="order-page-container">
+  <div class="order-container">
+    <!-- Back to Profile Button -->
+    {% comment %} <!-- <div style="text-align: right;margin-top: 5.2%;margin-bottom: 1%;margin-right: 9%;">
+        <a href="{% url 'profile' %}"><button class="btn" style="background-color: #2631c6; color: white;padding: 6px 10px;">
+        Back to profile</button></a>
+      </div> --> {% endcomment %}
+
+    <!-- Order Box -->
+    <div class="order-box mt-5 ">
+      <h2>Your Orders</h2>
+
+      {% if orders %}
+        <div class="orders-list">
+          {% for order in orders %}
+            <div class="order-card">
+              <h3 class="p-2 bg-primary text-white">Order ID: #{{ order.order_uuid }}</h3>
+              <p style="margin-bottom: -4px;"><span class="fw-bold">Status: </span>{{ order.get_status_display }}</p>
+              <p style="margin-bottom: -4px;"><span class="fw-bold">Order Date: </span>{{ order.order_on }} at {{ order.order_time }}</p>
+              <p style="margin-bottom: 6px;"><span class="fw-bold">Total: </span>₹{{ order.total }}</p>
+
+              <ul>
+                <li style="margin-bottom: -8px;"><span class="fw-bold">Details:</span></li>
+                {% for detail in order.orderdetails_set.all %}
+                  <li style="margin-bottom: -5px;" class="fw-normal">{{ detail.product.name }} - {{ detail.quantity }} × ₹{{ detail.price }}</li>
+                {% empty %}
+                  <li>No details available for this order.</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <h1 style="font-size: 2rem;text-align: center;">You have no orders yet.</h1>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
