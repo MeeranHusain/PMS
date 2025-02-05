@@ -56,6 +56,7 @@ python manage.py runserver
 ```
 Visit http://127.0.0.1:8000/ in your browser.
 
+
 ## 🛒 Usage
 1. Sign up or log in as a customer or admin.
 2. Browse available medicines and add them to the cart.
