@@ -10,7 +10,7 @@ A comprehensive **E-commerce Pharmacy Management System** built using **Python a
 - **Shopping Cart & Checkout** for seamless ordering
 - **Order Management** (Track orders, view history)
 - **Search & Filter** functionality for medicines
-- **Secure Payment Integration** 
+- **Secure Payment Integration** (Razorpay)
 - **Responsive UI** for mobile and desktop users
 
 ## 🛠️ Tech Stack
